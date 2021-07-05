@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookingRoomServiceImpl implements BookingRoomService {
@@ -35,8 +36,22 @@ public class BookingRoomServiceImpl implements BookingRoomService {
             Date start,
             Date end) {
         return bookingRoomRepository.findBookingRoomOnTime(meetingRoomId, status.ordinal(), start, end);
-
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<BookingRoom> getBookingRoomById(Integer bookingRoomId) {
+        return bookingRoomRepository.findById(bookingRoomId);
+    }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<BookingRoom> findByBookingRoomByLimit(
+            String roomName,
+            String employName,
+            BookingStatusEnum status,
+            Date start,
+            Date end) {
+        return bookingRoomRepository.findByBookingRoomByLimit(status.ordinal(), roomName, employName, start, end);
+    }
 }

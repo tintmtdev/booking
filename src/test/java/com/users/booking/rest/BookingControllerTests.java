@@ -40,15 +40,27 @@ public class BookingControllerTests {
     @MockBean
     BookingRoomFacade bookingRoomFacade;
 
-    String BookingServiceTest = "/bookings";
+    String bookingServiceTest = "/bookings";
 
     @Before
     public void setUp() {
 
     }
 
+    MockHttpServletRequestBuilder get(String urlTemplate, Object... uriVars){
+        return MockMvcRequestBuilders.get(bookingServiceTest + urlTemplate, uriVars);
+    }
+
     MockHttpServletRequestBuilder post(String urlTemplate, Object... uriVars){
-        return MockMvcRequestBuilders.post(BookingServiceTest + urlTemplate, uriVars);
+        return MockMvcRequestBuilders.post(bookingServiceTest + urlTemplate, uriVars);
+    }
+
+    MockHttpServletRequestBuilder patch(String urlTemplate, Object... uriVars){
+        return MockMvcRequestBuilders.patch(bookingServiceTest + urlTemplate, uriVars);
+    }
+
+    MockHttpServletRequestBuilder put(String urlTemplate, Object... uriVars){
+        return MockMvcRequestBuilders.put(bookingServiceTest + urlTemplate, uriVars);
     }
 
     @Test

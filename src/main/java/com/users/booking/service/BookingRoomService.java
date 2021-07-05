@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public interface BookingRoomService {
     BookingRoom saveBooking(BookingRoom bookingRoom);
@@ -15,4 +16,13 @@ public interface BookingRoomService {
             BookingStatusEnum status,
             Date startDate,
             Date endDate);
+
+    Optional<BookingRoom> getBookingRoomById(Integer bookingRoomId);
+
+    List<BookingRoom> findByBookingRoomByLimit(
+            String roomName,
+            String employName,
+            BookingStatusEnum status,
+            Date start,
+            Date end);
 }

@@ -25,4 +25,19 @@ public interface BookingRoomRepository extends JpaRepository<BookingRoom, Intege
             @Param("endDate") Date endDate
     );
 
+    @Query(value = "select b.* from booking_room b " +
+            " join meeting_room m on (m.id = b.meeting_room_id)" +
+            " join employee e on (e.id = b.employee_id) " +
+            " where (:roomName = '' or m.name ilike %:roomName%)" +
+            " and (:employName = '' or concat_ws(' ', e.first_name, e.last_name) ilike %:employName%)" +
+            " and b.status = :status" +
+            " and ((b.start_date between :startDate and :endDate) or (b.end_date between :startDate and :endDate))" +
+            " order by b.id DESC", nativeQuery = true)
+    List<BookingRoom> findByBookingRoomByLimit(
+            @Param("status") Integer status,
+            @Param("roomName") String roomName,
+            @Param("employName") String employName,
+            @Param("startDate") Date startDate,
+            @Param("endDate") Date endDate
+    );
 }
